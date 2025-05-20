@@ -16,6 +16,6 @@ public class Martin extends Actor
     
     public Martin() {
        setImage(martin);
-       martin.scale(72, 72);
+       martin.scale(155, 158);
     }
 }
