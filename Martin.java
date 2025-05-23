@@ -8,14 +8,33 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Martin extends Actor
 {
-    GreenfootImage martin = new GreenfootImage("images/png/Idle (1).png");
+    GreenfootImage[] idleRight = new GreenfootImage[6];
+
+    SimpleTimer animationTimer = new SimpleTimer();
+    
     public void act()
     {
-        
+        animateMartin();
     }
     
     public Martin() {
-       setImage(martin);
-       martin.scale(155, 158);
+       for(int i = 0; i < idleRight.length; i++) {
+           idleRight[i] = new GreenfootImage("images/Idle Hero/idle" + i + ".png");
+           idleRight[i].scale(400, 400);
+       }
+       
+       animationTimer.mark();
+       
+       setImage(idleRight[0]);
+    }
+    
+    int imageIndex = 0;
+    public void animateMartin() {
+        if(animationTimer.millisElapsed() < 100) {
+            return;
+        }
+        animationTimer.mark();
+        setImage(idleRight[imageIndex]);
+        imageIndex = (imageIndex + 1) % idleRight.length;
     }
 }
