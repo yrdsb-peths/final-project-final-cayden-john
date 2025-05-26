@@ -10,9 +10,7 @@ public class WiseFarmer extends Actor
 {
     GreenfootImage[] idle = new GreenfootImage[2];
 
-
     SimpleTimer animationTimer = new SimpleTimer();
-
 
     int idleIndex = 0;
 
@@ -33,7 +31,7 @@ public class WiseFarmer extends Actor
         animationTimer.mark();
 
 
-            setImage(idle[idleIndex]);
-            idleIndex = (idleIndex + 1) % idle.length;
+        setImage(idle[idleIndex]);
+        idleIndex = (idleIndex + 1) % idle.length;
     }
 }
