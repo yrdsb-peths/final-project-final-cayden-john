@@ -7,6 +7,6 @@ public class MyWorld extends World {
         addObject(martin, 100, 500);
         setBackground("images/Battleground2.png");
         WiseFarmer wiseFarmer = new WiseFarmer();
-        addObject(wiseFarmer, 700, 500);
+        addObject(wiseFarmer, 700, 482);
     }
 }
