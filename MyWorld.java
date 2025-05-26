@@ -5,8 +5,14 @@ public class MyWorld extends World {
         super(1127, 557, 1);
         Martin martin = new Martin();
         addObject(martin, 100, 500);
+
         setBackground("images/Cave.png");
-        WiseFarmer wiseFarmer = new WiseFarmer();
-        addObject(wiseFarmer, 700, 500);
+ 
+
+        //WiseFarmer wiseFarmer = new WiseFarmer();
+        //addObject(wiseFarmer, 700, 482);
+        //EvilEdd evilEdd = new EvilEdd();
+        //addObject(evilEdd, 480, 250);
+
     }
 }
