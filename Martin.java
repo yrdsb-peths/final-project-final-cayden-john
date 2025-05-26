@@ -17,6 +17,11 @@ public class Martin extends Actor
     String facing = "right";
     boolean isWalking = false;
 
+    
+    private int jumpHeight;         
+    private int gravity = 1;           
+    private boolean isOnGround = true; 
+    
     int idleIndex = 0;
     int walkIndex = 0;
 
@@ -66,6 +71,12 @@ public class Martin extends Actor
         } else {
             animateIdle();
         }
+        
+        if (Greenfoot.isKeyDown("up")) {
+            jump();
+        }
+    
+        gravity();
     }
 
     public void animateIdle() {
@@ -97,4 +108,24 @@ public class Martin extends Actor
             walkIndex = (walkIndex + 1) % walkLeft.length;
         }
     }
+    
+    public void jump() {
+        if (isOnGround) {
+            jumpHeight = -20; 
+            isOnGround = false;
+        }
+    }
+    
+    public void gravity() {
+    setLocation(getX(), getY() + jumpHeight);
+    jumpHeight += gravity;
+
+    if (getY() >= 500) {
+        setLocation(getX(), 500);
+        jumpHeight = 0;
+        isOnGround = true;
+    }
+}
+
+
 }
