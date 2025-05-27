@@ -11,6 +11,10 @@ public class Platform extends Actor
     GreenfootImage image = new GreenfootImage("images/Platform.png");
     public void act()
     {
+        
+    }
+    
+    public Platform() {
         setImage(image);
         image.scale(125, 50);
     }

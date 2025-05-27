@@ -67,6 +67,7 @@ public class Martin extends Actor
             attackIndex = 0;
             shootCooldown.mark();
         }
+
     }
     
         
@@ -150,13 +151,16 @@ public class Martin extends Actor
     public void gravity() {
         setLocation(getX(), getY() + jumpHeight);
         jumpHeight += gravity;
-    
+        
         if (getY() >= 500) {
             setLocation(getX(), 500);
             jumpHeight = 0;
             isOnGround = true;
+        } else {
+            isOnGround = false;
         }
     }
+
     
     public void animateAttack() {
         if(animationTimer.millisElapsed() < 50) {
