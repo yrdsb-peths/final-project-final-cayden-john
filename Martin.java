@@ -25,6 +25,8 @@ public class Martin extends Actor
     int idleIndex = 0;
     int walkIndex = 0;
 
+    SimpleTimer shootCooldown = new SimpleTimer();
+    
     public Martin() {
         for(int i = 0; i < idleRight.length; i++) {
            idleRight[i] = new GreenfootImage("images/Idle Hero/idle" + i + ".png");
@@ -50,6 +52,8 @@ public class Martin extends Actor
 
         animationTimer.mark();
         setImage(idleRight[0]);
+        
+        shootCooldown.mark();
     }
 
     public void act()
@@ -132,6 +136,11 @@ public class Martin extends Actor
     }
     
     public void shootArrow() {
+        if(shootCooldown.millisElapsed() < 300) {
+            return;
+        }
+        shootCooldown.mark();
+        
         Arrow arrow = new Arrow(facing); 
         getWorld().addObject(arrow, getX(), getY());
     }

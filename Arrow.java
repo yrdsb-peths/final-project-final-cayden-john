@@ -13,6 +13,10 @@ public class Arrow extends Actor
         } else {
             setLocation(getX() - speed, getY());
         }
+        
+        if(getX() > getWorld().getWidth() - 5 || getX() < 5) {
+            getWorld().removeObject(this);
+        }
     }
     
     public Arrow(String direction) {
