@@ -12,6 +12,8 @@ public class Martin extends Actor
     GreenfootImage[] idleLeft = new GreenfootImage[6];
     GreenfootImage[] walkRight = new GreenfootImage[8];
     GreenfootImage[] walkLeft = new GreenfootImage[8];
+    GreenfootImage[] attackRight = new GreenfootImage[9];
+    GreenfootImage[] attackLeft = new GreenfootImage[9];
 
     SimpleTimer animationTimer = new SimpleTimer();
     String facing = "right";
@@ -27,6 +29,47 @@ public class Martin extends Actor
 
     SimpleTimer shootCooldown = new SimpleTimer();
     
+    private boolean isAttacking = false;
+    private int attackIndex = 0;
+    
+    public void act()
+    {
+        gravity();
+        
+        if (Greenfoot.isKeyDown("up")) {
+            jump();
+        }
+        
+        if (isAttacking) {
+            animateAttack();
+            return;
+        }
+        isWalking = false;
+        
+        if(Greenfoot.isKeyDown("left")) {
+            move(-5);
+            facing = "left";
+            isWalking = true;
+        } else if(Greenfoot.isKeyDown("right")) {
+            move(5);
+            facing = "right";
+            isWalking = true;
+        }
+        
+        if (isWalking) {
+            animateWalk();
+        } else {
+            animateIdle();
+        }
+                
+        if (Greenfoot.isKeyDown("space") && shootCooldown.millisElapsed() > 500) {
+            isAttacking = true;
+            attackIndex = 0;
+            shootCooldown.mark();
+        }
+    }
+    
+        
     public Martin() {
         for(int i = 0; i < idleRight.length; i++) {
            idleRight[i] = new GreenfootImage("images/Idle Hero/idle" + i + ".png");
@@ -45,46 +88,26 @@ public class Martin extends Actor
         }
 
         for(int i = 0; i < walkLeft.length; i++) {
-           walkLeft[i] = new GreenfootImage("images/Hero Walk/walk" + i + ".png");
-           walkLeft[i].mirrorHorizontally();
-           walkLeft[i].scale(400, 400);
+            walkLeft[i] = new GreenfootImage("images/Hero Walk/walk" + i + ".png");
+            walkLeft[i].mirrorHorizontally();
+            walkLeft[i].scale(400, 400);
+        }
+        
+        for(int i = 0; i < attackRight.length; i++) {
+            attackRight[i] = new GreenfootImage("images/Hero Attack/attack" + i + ".png");
+            attackRight[i].scale(400,400);
+        }
+        
+        for(int i = 0; i < attackLeft.length; i++) {
+            attackLeft[i] = new GreenfootImage("images/Hero Attack/attack" + i + ".png");
+            attackLeft[i].mirrorHorizontally();
+            attackLeft[i].scale(400, 400);
         }
 
         animationTimer.mark();
         setImage(idleRight[0]);
         
         shootCooldown.mark();
-    }
-
-    public void act()
-    {
-        isWalking = false;
-
-        if(Greenfoot.isKeyDown("left")) {
-            move(-5);
-            facing = "left";
-            isWalking = true;
-        } else if(Greenfoot.isKeyDown("right")) {
-            move(5);
-            facing = "right";
-            isWalking = true;
-        }
-
-        if (isWalking) {
-            animateWalk();
-        } else {
-            animateIdle();
-        }
-        
-        if (Greenfoot.isKeyDown("up")) {
-            jump();
-        }
-    
-        gravity();
-        
-        if(Greenfoot.isKeyDown("space")) {
-            shootArrow();
-        }
     }
 
     public void animateIdle() {
@@ -135,13 +158,28 @@ public class Martin extends Actor
         }
     }
     
-    public void shootArrow() {
-        if(shootCooldown.millisElapsed() < 300) {
+    public void animateAttack() {
+        if(animationTimer.millisElapsed() < 50) {
             return;
         }
-        shootCooldown.mark();
+        animationTimer.mark();
         
-        Arrow arrow = new Arrow(facing); 
-        getWorld().addObject(arrow, getX(), getY());
+        if(facing.equals("right")) {
+            setImage(attackRight[attackIndex]);
+        } else {
+            setImage(attackLeft[attackIndex]);
+        }
+        
+        if(attackIndex == 7) {
+            Arrow arrow = new Arrow(facing);
+            getWorld().addObject(arrow, getX(), getY());
+        }
+        
+        attackIndex++;
+        
+        if(attackIndex >= attackRight.length) {
+            isAttacking = false;
+            attackIndex = 0;
+        }
     }
 }
