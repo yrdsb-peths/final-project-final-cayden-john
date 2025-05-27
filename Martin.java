@@ -30,7 +30,7 @@ public class Martin extends Actor
     SimpleTimer shootCooldown = new SimpleTimer();
     
     private boolean isAttacking = false;
-    private int attackIndex = 0;
+    private int attackIndex;
     
     public void act()
     {
