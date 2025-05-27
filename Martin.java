@@ -77,6 +77,10 @@ public class Martin extends Actor
         }
     
         gravity();
+        
+        if(Greenfoot.isKeyDown("space")) {
+            shootArrow();
+        }
     }
 
     public void animateIdle() {
@@ -117,15 +121,18 @@ public class Martin extends Actor
     }
     
     public void gravity() {
-    setLocation(getX(), getY() + jumpHeight);
-    jumpHeight += gravity;
-
-    if (getY() >= 500) {
-        setLocation(getX(), 500);
-        jumpHeight = 0;
-        isOnGround = true;
+        setLocation(getX(), getY() + jumpHeight);
+        jumpHeight += gravity;
+    
+        if (getY() >= 500) {
+            setLocation(getX(), 500);
+            jumpHeight = 0;
+            isOnGround = true;
+        }
     }
-}
-
-
+    
+    public void shootArrow() {
+        Arrow arrow = new Arrow(facing); 
+        getWorld().addObject(arrow, getX(), getY());
+    }
 }

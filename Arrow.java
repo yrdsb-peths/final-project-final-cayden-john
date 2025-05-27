@@ -1,18 +1,28 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**
- * Write a description of class Arrow here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class Arrow extends Actor
 {
     GreenfootImage arrow = new GreenfootImage("images/Arrow1.png");;
+    private int speed = 10;
+    private String direction;
     
     public void act()
     {
-        setImage(arrow);
+        if(direction.equals("right")) {
+            setLocation(getX() + speed, getY());
+        } else {
+            setLocation(getX() - speed, getY());
+        }
+    }
+    
+    public Arrow(String direction) {
+        this.direction = direction;
         arrow.scale(82, 82);
+        
+        if(direction.equals("left")) {
+            arrow.mirrorHorizontally();
+        }
+        
+        setImage(arrow);
     }
 }
