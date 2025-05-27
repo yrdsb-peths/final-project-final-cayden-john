@@ -36,7 +36,7 @@ public class Martin extends Actor
     {
         gravity();
         
-        if (Greenfoot.isKeyDown("up")) {
+        if (Greenfoot.isKeyDown("w") || Greenfoot.isKeyDown("up")) {
             jump();
         }
         
@@ -46,11 +46,11 @@ public class Martin extends Actor
         }
         isWalking = false;
         
-        if(Greenfoot.isKeyDown("left")) {
+        if(Greenfoot.isKeyDown("a")|| Greenfoot.isKeyDown("left")) {
             move(-5);
             facing = "left";
             isWalking = true;
-        } else if(Greenfoot.isKeyDown("right")) {
+        } else if(Greenfoot.isKeyDown("d")|| Greenfoot.isKeyDown("right")) {
             move(5);
             facing = "right";
             isWalking = true;
