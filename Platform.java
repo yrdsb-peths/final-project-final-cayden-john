@@ -14,8 +14,8 @@ public class Platform extends Actor
         
     }
     
-    public Platform() {
+    public Platform(int width, int height) {
         setImage(image);
-        image.scale(125, 50);
+        image.scale(width, height);
     }
 }
