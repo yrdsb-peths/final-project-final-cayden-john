@@ -7,7 +7,8 @@ public class MyWorld extends World {
         addObject(martin,100,500);
 
         setBackground("images/Battleground2.png");
-
+        LoserDrill loserDrill = new LoserDrill();
+        addObject(loserDrill,300, 200);
         //WiseFarmer wiseFarmer = new WiseFarmer();
         //addObject(wiseFarmer, 700, 482);
         //EvilEdd evilEdd = new EvilEdd();
