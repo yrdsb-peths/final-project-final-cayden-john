@@ -3,8 +3,14 @@ import greenfoot.*;
 public class MyWorld extends World {
     public MyWorld() {
         super(960, 540, 1);
+        Platform platform = new Platform(125, 50);
+        addObject(platform, 230, 375);
+        Platform platform1 = new Platform(960,40);
+        addObject(platform1, 480, getHeight()-10);
+        prepare();
+        
         Martin martin = new Martin();
-        addObject(martin,100,500);
+        addObject(martin,100,400);
 
         setBackground("images/Battleground2.png");
         LoserDrill loserDrill = new LoserDrill();
@@ -13,10 +19,6 @@ public class MyWorld extends World {
         //addObject(wiseFarmer, 700, 482);
         //EvilEdd evilEdd = new EvilEdd();
         //addObject(evilEdd, 480, 250);
-
-        Platform platform = new Platform();
-        addObject(platform, 230, 375);
-        prepare();
     }
     
     /**
@@ -25,7 +27,7 @@ public class MyWorld extends World {
      */
     private void prepare()
     {
-        Platform platform2 = new Platform();
+        Platform platform2 = new Platform(125, 50);
         addObject(platform2,711,375);
     }
 }
