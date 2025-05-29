@@ -1,13 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**
- * Write a description of class Martin here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
 public class Martin extends Actor
 {
     GreenfootImage[] idleRight = new GreenfootImage[6];
@@ -24,7 +16,7 @@ public class Martin extends Actor
     private int jumpHeight;         
     private int gravity = 1;           
     private boolean isOnGround = true; 
-    private int feetOffset = 170; // Distance from bottom of image to player's feet
+    private int feetOffset = 170; 
 
     int idleIndex = 0;
     int walkIndex = 0;
@@ -82,11 +74,11 @@ public class Martin extends Actor
             jump();
         }
     
-        checkGroundCollision(); // Make sure this is called every frame
+        checkGroundCollision();
     
         if (isAttacking) {
             animateAttack();
-            return;  // Now safe to return after collision is checked
+            return;  
         }
     
         isWalking = false;
@@ -171,53 +163,42 @@ public class Martin extends Actor
     }
 
     public void gravity() {
-        // Apply vertical velocity (jump/fall)
         setLocation(getX(), getY() + jumpHeight);
-        // Gravity accelerates downwards
         jumpHeight += gravity;
-
-        // Calculate player's feet y-position
         int feetY = getY() + (getImage().getHeight() / 2) - feetOffset;
-
-        // World floor y-position (bottom of screen)
         int floorY = getWorld().getHeight();
 
         if (feetY >= floorY) {
-            // Snap player feet to floor
             setLocation(getX(), floorY - ((getImage().getHeight() / 2) - feetOffset));
             jumpHeight = 0;
             isOnGround = true;
         } else if (!isOnGround) {
-            // Player is in air
             isOnGround = false;
         }
     }
 
     public void checkGroundCollision() {
-        // Check slightly below the feet (+5 pixels buffer)
-        int checkOffset = (getImage().getHeight() / 2) - feetOffset + 5;
-
-        Actor ground = getOneObjectAtOffset(0, checkOffset, Platform.class);
-
-        if (ground != null) {
-            int groundTopY = ground.getY() - ground.getImage().getHeight() / 2;
-
-            // Player's feet Y position
-            int feetY = getY() + (getImage().getHeight() / 2) - feetOffset;
-
-            if (feetY > groundTopY) {
-                // Snap player so feet sit exactly on platform top
-                setLocation(getX(), groundTopY - ((getImage().getHeight() / 2) - feetOffset));
-                jumpHeight = 0;
-                isOnGround = true;
-            }
-        } else {
-            // Only set false if player is not on ground floor
-            if (getY() + (getImage().getHeight() / 2) - feetOffset < getWorld().getHeight()) {
-                isOnGround = false;
+        if (jumpHeight >= 0) {
+            int checkOffset = (getImage().getHeight() / 2) - feetOffset + 5;
+            Actor ground = getOneObjectAtOffset(0, checkOffset, Platform.class);
+    
+            if (ground != null) {
+                int groundTopY = ground.getY() - ground.getImage().getHeight() / 2;
+                int feetY = getY() + (getImage().getHeight() / 2) - feetOffset;
+    
+                if (feetY > groundTopY) {
+                    setLocation(getX(), groundTopY - ((getImage().getHeight() / 2) - feetOffset));
+                    jumpHeight = 0;
+                    isOnGround = true;
+                }
+            } else {
+                if (getY() + (getImage().getHeight() / 2) - feetOffset < getWorld().getHeight()) {
+                    isOnGround = false;
+                }
             }
         }
     }
+
 
     public void jump() {
         if (isOnGround) {

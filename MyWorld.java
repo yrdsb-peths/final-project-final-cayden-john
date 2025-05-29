@@ -10,13 +10,13 @@ public class MyWorld extends World {
         prepare();
         
         Martin martin = new Martin();
-        addObject(martin,100,400);
+        addObject(martin,100,480);
 
         setBackground("images/Battleground2.png");
         LoserDrill loserDrill = new LoserDrill();
         addObject(loserDrill,300, 200);
         //WiseFarmer wiseFarmer = new WiseFarmer();
-        //addObject(wiseFarmer, 700, 482);
+        //addObject(wiseFarmer, 700, 464);
         //EvilEdd evilEdd = new EvilEdd();
         //addObject(evilEdd, 480, 250);
     }
