@@ -16,7 +16,7 @@ public class Martin extends Actor
     private int jumpHeight;         
     private int gravity = 1;           
     private boolean isOnGround = true; 
-    private int feetOffset = 170; 
+    private int feetOffset = 172; 
 
     int idleIndex = 0;
     int walkIndex = 0;
