@@ -1,7 +1,6 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
-public class Martin extends Actor
-{
+public class Martin extends Actor {
     GreenfootImage[] idleRight = new GreenfootImage[6];
     GreenfootImage[] idleLeft = new GreenfootImage[6];
     GreenfootImage[] walkRight = new GreenfootImage[8];
@@ -26,22 +25,24 @@ public class Martin extends Actor
     private boolean isAttacking = false;
     private int attackIndex;
 
-    public Martin()
-    {
+    private int health = 17;
+    private HealthBar healthBar; 
+
+    public Martin() {
         for(int i = 0; i < idleRight.length; i++) {
-           idleRight[i] = new GreenfootImage("images/Idle Hero/idle" + i + ".png");
-           idleRight[i].scale(400, 400);
+            idleRight[i] = new GreenfootImage("images/Idle Hero/idle" + i + ".png");
+            idleRight[i].scale(400, 400);
         }
 
         for(int i = 0; i < idleLeft.length; i++) {
-           idleLeft[i] = new GreenfootImage("images/Idle Hero/idle" + i + ".png");
-           idleLeft[i].mirrorHorizontally();
-           idleLeft[i].scale(400, 400);
+            idleLeft[i] = new GreenfootImage("images/Idle Hero/idle" + i + ".png");
+            idleLeft[i].mirrorHorizontally();
+            idleLeft[i].scale(400, 400);
         }
 
         for(int i = 0; i < walkRight.length; i++) {
-           walkRight[i] = new GreenfootImage("images/Hero Walk/walk" + i + ".png");
-           walkRight[i].scale(400, 400);
+            walkRight[i] = new GreenfootImage("images/Hero Walk/walk" + i + ".png");
+            walkRight[i].scale(400, 400);
         }
 
         for(int i = 0; i < walkLeft.length; i++) {
@@ -52,7 +53,7 @@ public class Martin extends Actor
 
         for(int i = 0; i < attackRight.length; i++) {
             attackRight[i] = new GreenfootImage("images/Hero Attack/attack" + i + ".png");
-            attackRight[i].scale(400,400);
+            attackRight[i].scale(400, 400);
         }
 
         for(int i = 0; i < attackLeft.length; i++) {
@@ -63,49 +64,47 @@ public class Martin extends Actor
 
         animationTimer.mark();
         setImage(idleRight[0]);
-
         shootCooldown.mark();
     }
 
     public void act() {
         gravity();
-    
+
         if (Greenfoot.isKeyDown("w") || Greenfoot.isKeyDown("up")) {
             jump();
         }
-    
+
         checkGroundCollision();
-    
+
         if (isAttacking) {
             animateAttack();
-            return;  
+            return;
         }
-    
+
         isWalking = false;
-    
-        if(Greenfoot.isKeyDown("a")|| Greenfoot.isKeyDown("left")) {
+
+        if(Greenfoot.isKeyDown("a") || Greenfoot.isKeyDown("left")) {
             move(-5);
             facing = "left";
             isWalking = true;
-        } else if(Greenfoot.isKeyDown("d")|| Greenfoot.isKeyDown("right")) {
+        } else if(Greenfoot.isKeyDown("d") || Greenfoot.isKeyDown("right")) {
             move(5);
             facing = "right";
             isWalking = true;
         }
-    
+
         if (isWalking) {
             animateWalk();
         } else {
             animateIdle();
         }
-    
+
         if (Greenfoot.isKeyDown("space") && shootCooldown.millisElapsed() > 500) {
             isAttacking = true;
             attackIndex = 0;
             shootCooldown.mark();
         }
     }
-
 
     public void animateIdle() {
         if(animationTimer.millisElapsed() < 100){
@@ -181,11 +180,11 @@ public class Martin extends Actor
         if (jumpHeight >= 0) {
             int checkOffset = (getImage().getHeight() / 2) - feetOffset + 5;
             Actor ground = getOneObjectAtOffset(0, checkOffset, Platform.class);
-    
+
             if (ground != null) {
                 int groundTopY = ground.getY() - ground.getImage().getHeight() / 2;
                 int feetY = getY() + (getImage().getHeight() / 2) - feetOffset;
-    
+
                 if (feetY > groundTopY) {
                     setLocation(getX(), groundTopY - ((getImage().getHeight() / 2) - feetOffset));
                     jumpHeight = 0;
@@ -199,11 +198,25 @@ public class Martin extends Actor
         }
     }
 
-
     public void jump() {
         if (isOnGround) {
             jumpHeight = -20; 
             isOnGround = false;
+        }
+    }
+
+    public void setHealthBar(HealthBar healthBar) {
+        this.healthBar = healthBar;
+    }
+
+    public void takeDamage() {
+        health--;
+        if (healthBar != null) {
+            healthBar.updateHealth(health);
+        }
+
+        if (health <= 0) {
+            getWorld().removeObject(this);
         }
     }
 }
