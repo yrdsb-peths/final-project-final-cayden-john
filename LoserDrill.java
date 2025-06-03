@@ -33,7 +33,7 @@ public class LoserDrill extends Actor
         animationTimer.mark();
 
 
-            setImage(idle[idleIndex]);
-            idleIndex = (idleIndex + 1) % idle.length;
+        setImage(idle[idleIndex]);
+        idleIndex = (idleIndex + 1) % idle.length;
     }
 }
