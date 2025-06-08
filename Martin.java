@@ -146,12 +146,8 @@ public class Martin extends Actor {
         }
         
         if (isHurt) {
-            gravity();
-            checkGroundCollision(); 
             animateHurt();
-            return; 
         }
-
 
         if (Greenfoot.isKeyDown("w") || Greenfoot.isKeyDown("up")) {
             jump();
