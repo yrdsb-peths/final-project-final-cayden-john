@@ -11,32 +11,32 @@ public class Martin extends Actor {
     GreenfootImage[] hurtLeft = new GreenfootImage[4];
     GreenfootImage[] deathRight = new GreenfootImage[4];
     GreenfootImage[] deathLeft = new GreenfootImage[4];
-
+    
     SimpleTimer animationTimer = new SimpleTimer();
     String facing = "right";
     boolean isWalking = false;
-
+    
     private int jumpHeight;         
     private int gravity = 1;           
     private boolean isOnGround = true; 
     private int feetOffset = 172; 
-
+    
     int idleIndex = 0;
     int walkIndex = 0;
-
+    
     SimpleTimer shootCooldown = new SimpleTimer();
-
+    
     private boolean isAttacking = false;
     private int attackIndex;
-
+    
     private int health = 17;
     private HealthBar healthBar; 
-
+    
     private boolean isHurt = false;
     private int hurtIndex = 0;
     private SimpleTimer hurtTimer = new SimpleTimer();
     private SimpleTimer damageCooldown = new SimpleTimer();
-    
+        
     int deathIndex = 0;
     boolean isDead = false;
     
@@ -129,7 +129,21 @@ public class Martin extends Actor {
                 }
             }
         }
-
+        
+        EvilEdd evilEdd = (EvilEdd)getOneIntersectingObject(EvilEdd.class);
+        if (evilEdd != null && !isHurt && damageCooldown.millisElapsed() > 1000) {
+            int dx = getX() - evilEdd.getX();
+            int dy = getY() - evilEdd.getY();
+            int distance = (int)Math.sqrt(dx * dx + dy * dy);
+            
+            int hitRange = 125; 
+            if (distance < hitRange) {
+                isHurt = true;
+                hurtIndex = 0;
+                damageCooldown.mark();
+                takeDamage();
+            }
+        }
         
         if (isHurt) {
             gravity();
@@ -309,25 +323,25 @@ public class Martin extends Actor {
     }
     
     public void animateDeath() {
-    if (animationTimer.millisElapsed() < 150) return;
-
-    if (facing.equals("right")) {
-        if (deathIndex < deathRight.length) {
-            setImage(deathRight[deathIndex]);
-            deathIndex++;
-            animationTimer.mark();
+        if (animationTimer.millisElapsed() < 150) return;
+    
+        if (facing.equals("right")) {
+            if (deathIndex < deathRight.length) {
+                setImage(deathRight[deathIndex]);
+                deathIndex++;
+                animationTimer.mark();
+            }
+        } else {
+            if (deathIndex < deathLeft.length) {
+                setImage(deathLeft[deathIndex]);
+                deathIndex++;
+                animationTimer.mark();
+            }
         }
-    } else {
-        if (deathIndex < deathLeft.length) {
-            setImage(deathLeft[deathIndex]);
-            deathIndex++;
-            animationTimer.mark();
+    
+        if (deathIndex >= deathRight.length) {
+            Greenfoot.stop();
         }
     }
-
-    if (deathIndex >= deathRight.length) {
-        Greenfoot.stop();
-    }
-}
 
 }
