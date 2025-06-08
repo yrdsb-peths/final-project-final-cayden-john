@@ -10,7 +10,7 @@ public class MyWorld extends World {
         prepare();
         
         Martin martin = new Martin();
-        addObject(martin,100,480);
+        addObject(martin,100,482);
 
         setBackground("images/Battleground2.png");
         //LoserDrill loserDrill = new LoserDrill();

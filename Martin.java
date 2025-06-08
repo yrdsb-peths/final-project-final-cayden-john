@@ -7,6 +7,8 @@ public class Martin extends Actor {
     GreenfootImage[] walkLeft = new GreenfootImage[8];
     GreenfootImage[] attackRight = new GreenfootImage[9];
     GreenfootImage[] attackLeft = new GreenfootImage[9];
+    GreenfootImage[] hurtRight = new GreenfootImage[4];
+    GreenfootImage[] hurtLeft = new GreenfootImage[4];
 
     SimpleTimer animationTimer = new SimpleTimer();
     String facing = "right";
@@ -28,6 +30,11 @@ public class Martin extends Actor {
     private int health = 17;
     private HealthBar healthBar; 
 
+    private boolean isHurt = false;
+    private int hurtIndex = 0;
+    private SimpleTimer hurtTimer = new SimpleTimer();
+    private SimpleTimer damageCooldown = new SimpleTimer();
+    
     public Martin() {
         for(int i = 0; i < idleRight.length; i++) {
             idleRight[i] = new GreenfootImage("images/Idle Hero/idle" + i + ".png");
@@ -61,7 +68,20 @@ public class Martin extends Actor {
             attackLeft[i].mirrorHorizontally();
             attackLeft[i].scale(400, 400);
         }
-
+        
+        for (int i = 0; i < hurtRight.length; i++) {
+            hurtRight[i] = new GreenfootImage("images/Hero Hurt/hurt" + i + ".png");
+            hurtRight[i].scale(400, 400);
+        }
+        
+        for (int i = 0; i < hurtLeft.length; i++) {
+            hurtLeft[i] = new GreenfootImage("images/Hero Hurt/hurt" + i + ".png");
+            hurtLeft[i].mirrorHorizontally();
+            hurtLeft[i].scale(400, 400);
+        }
+        
+        hurtTimer.mark();
+        damageCooldown.mark();
         animationTimer.mark();
         setImage(idleRight[0]);
         shootCooldown.mark();
@@ -69,6 +89,32 @@ public class Martin extends Actor {
 
     public void act() {
         gravity();
+    
+        if (!isHurt && damageCooldown.millisElapsed() > 1000) {
+            EnemyShot shot = (EnemyShot)getOneIntersectingObject(EnemyShot.class);
+            if (shot != null) {
+                int dx = getX() - shot.getX();
+                int dy = getY() - shot.getY();
+                int distance = (int)Math.sqrt(dx * dx + dy * dy);
+        
+                if (distance < 60) { 
+                    getWorld().removeObject(shot);
+                    isHurt = true;
+                    hurtIndex = 0;
+                    damageCooldown.mark();
+                    takeDamage();
+                }
+            }
+        }
+
+        
+        if (isHurt) {
+            gravity();
+            checkGroundCollision(); 
+            animateHurt();
+            return; 
+        }
+
 
         if (Greenfoot.isKeyDown("w") || Greenfoot.isKeyDown("up")) {
             jump();
@@ -219,4 +265,22 @@ public class Martin extends Actor {
             getWorld().removeObject(this);
         }
     }
+    
+    public void animateHurt() {
+        if (hurtTimer.millisElapsed() < 100) return;
+        hurtTimer.mark();
+    
+        if (facing.equals("right")) {
+            setImage(hurtRight[hurtIndex]);
+        } else {
+            setImage(hurtLeft[hurtIndex]);
+        }
+    
+        hurtIndex++;
+        if (hurtIndex >= hurtRight.length) {
+            isHurt = false;
+            hurtIndex = 0;
+        }
+    }
+
 }
