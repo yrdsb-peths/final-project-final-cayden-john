@@ -23,7 +23,11 @@ public class MyWorld extends World {
         
         HealthBar healthBar = new HealthBar(17);
         addObject(healthBar, 130, 30); 
-
+        
+        EnemyHealthBar enemyHealthBar = new EnemyHealthBar(25);
+        addObject(enemyHealthBar, 830, 30); 
+        
+        evilEdd.setHealthBar(enemyHealthBar);
         martin.setHealthBar(healthBar);
     }
     

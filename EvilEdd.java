@@ -1,32 +1,33 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
-public class EvilEdd extends Actor
-{
+public class EvilEdd extends Actor {
     GreenfootImage[] idle = new GreenfootImage[4];
     SimpleTimer animationTimer = new SimpleTimer();
     SimpleTimer shootTimer = new SimpleTimer();
 
     int idleIndex = 0;
-    int nextShotDelay = Greenfoot.getRandomNumber(2000) + 500; // 0.5–2.5s
+    int nextShotDelay = Greenfoot.getRandomNumber(2000) + 500;
 
-    public EvilEdd(){
-        for(int i = 0; i < idle.length; i++) {
+    private int maxHealth = 25;
+    private int currentHealth = maxHealth;
+    private EnemyHealthBar healthBar;
+
+    public EvilEdd() {
+        for (int i = 0; i < idle.length; i++) {
             idle[i] = new GreenfootImage("images/Evil Edd/Evil Edd " + i + ".png");
             idle[i].scale(355, 355);
         }
         shootTimer.mark();
     }
 
-    public void act()
-    {
+    public void act() {
         animateIdle();
         maybeShoot();
+        checkArrowHit();
     }
 
     private void animateIdle() {
-        if(animationTimer.millisElapsed() < 125){
-            return;
-        }
+        if (animationTimer.millisElapsed() < 125) return;
         animationTimer.mark();
         setImage(idle[idleIndex]);
         idleIndex = (idleIndex + 1) % idle.length;
@@ -37,12 +38,47 @@ public class EvilEdd extends Actor
             shootTimer.mark();
             nextShotDelay = Greenfoot.getRandomNumber(2000) + 500;
 
-            // Only shoot downward
-            int dx = Greenfoot.getRandomNumber(11) - 5;  // -5 to 5
-            int dy = Greenfoot.getRandomNumber(5) + 1;   // 1 to 5 (always positive)
+            int dx = Greenfoot.getRandomNumber(11) - 5;
+            int dy = Greenfoot.getRandomNumber(5) + 1;
 
             EnemyShot shot = new EnemyShot(dx, dy);
             getWorld().addObject(shot, getX(), getY());
         }
+    }
+
+    private void checkArrowHit() {
+        for (Object obj : getIntersectingObjects(Arrow.class)) {
+            Arrow arrow = (Arrow) obj;
+            int hitboxRadius = 80;
+            if (Math.abs(arrow.getX() - getX()) < hitboxRadius &&
+                Math.abs(arrow.getY() - getY()) < hitboxRadius) {
+
+                getWorld().removeObject(arrow);
+                takeDamage(1);
+                break;
+            }
+        }
+    }
+
+    private void takeDamage(int amount) {
+        currentHealth = Math.max(0, currentHealth - amount);
+        if (healthBar != null) {
+            healthBar.updateHealth(currentHealth);
+        }
+
+        if (currentHealth <= 0) {
+            if (healthBar != null) {
+                getWorld().removeObject(healthBar);
+            }
+            getWorld().removeObject(this);
+        }
+    }
+
+    public void setHealthBar(EnemyHealthBar healthBar) {
+        this.healthBar = healthBar;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
     }
 }
