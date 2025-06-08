@@ -9,6 +9,8 @@ public class Martin extends Actor {
     GreenfootImage[] attackLeft = new GreenfootImage[9];
     GreenfootImage[] hurtRight = new GreenfootImage[4];
     GreenfootImage[] hurtLeft = new GreenfootImage[4];
+    GreenfootImage[] deathRight = new GreenfootImage[4];
+    GreenfootImage[] deathLeft = new GreenfootImage[4];
 
     SimpleTimer animationTimer = new SimpleTimer();
     String facing = "right";
@@ -34,6 +36,9 @@ public class Martin extends Actor {
     private int hurtIndex = 0;
     private SimpleTimer hurtTimer = new SimpleTimer();
     private SimpleTimer damageCooldown = new SimpleTimer();
+    
+    int deathIndex = 0;
+    boolean isDead = false;
     
     public Martin() {
         for(int i = 0; i < idleRight.length; i++) {
@@ -79,6 +84,17 @@ public class Martin extends Actor {
             hurtLeft[i].mirrorHorizontally();
             hurtLeft[i].scale(400, 400);
         }
+            
+        for (int i = 0; i < deathRight.length; i++) {
+            deathRight[i] = new GreenfootImage("images/Hero Death/death" + i + ".png");
+            deathRight[i].scale(400, 400);
+        }
+        
+        for (int i = 0; i < deathLeft.length; i++) {
+            deathLeft[i] = new GreenfootImage("images/Hero Death/death" + i + ".png");
+            hurtLeft[i].mirrorHorizontally();
+            deathLeft[i].scale(400, 400);
+        }
         
         hurtTimer.mark();
         damageCooldown.mark();
@@ -89,6 +105,13 @@ public class Martin extends Actor {
 
     public void act() {
         gravity();
+        
+        if (isDead) {
+            gravity(); 
+            checkGroundCollision();
+            animateDeath();
+            return;
+        }
     
         if (!isHurt && damageCooldown.millisElapsed() > 1000) {
             EnemyShot shot = (EnemyShot)getOneIntersectingObject(EnemyShot.class);
@@ -261,8 +284,10 @@ public class Martin extends Actor {
             healthBar.updateHealth(health);
         }
 
-        if (health <= 0) {
-            getWorld().removeObject(this);
+        if (health <= 0 && !isDead) {
+            isDead = true;
+            deathIndex = 0;
+            animationTimer.mark();
         }
     }
     
@@ -282,5 +307,27 @@ public class Martin extends Actor {
             hurtIndex = 0;
         }
     }
+    
+    public void animateDeath() {
+    if (animationTimer.millisElapsed() < 150) return;
+
+    if (facing.equals("right")) {
+        if (deathIndex < deathRight.length) {
+            setImage(deathRight[deathIndex]);
+            deathIndex++;
+            animationTimer.mark();
+        }
+    } else {
+        if (deathIndex < deathLeft.length) {
+            setImage(deathLeft[deathIndex]);
+            deathIndex++;
+            animationTimer.mark();
+        }
+    }
+
+    if (deathIndex >= deathRight.length) {
+        Greenfoot.stop();
+    }
+}
 
 }

@@ -46,7 +46,9 @@ public class EnemyShot extends Actor
     }
 
     private void animate() {
-        if (animationTimer.millisElapsed() < 100) return;
+        if (animationTimer.millisElapsed() < 250) {
+            return;
+        }
 
         frameIndex = (frameIndex + 1) % fireballFrames.length;
         setImage(fireballFrames[frameIndex]);
