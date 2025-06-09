@@ -3,7 +3,7 @@ import greenfoot.*;
 public class EnemyHealthBar extends Actor {
     private int maxHealth;
     private int currentHealth;
-    private int barWidth = 200;
+    private int barWidth = 500;
     private int barHeight = 20;
 
     public EnemyHealthBar(int maxHealth) {

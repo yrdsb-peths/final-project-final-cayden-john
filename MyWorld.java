@@ -18,14 +18,14 @@ public class MyWorld extends World {
         //WiseFarmer wiseFarmer = new WiseFarmer();
         //addObject(wiseFarmer, 700, 464);
         EvilEdd evilEdd = new EvilEdd();
-        addObject(evilEdd, 480, 178);
+        addObject(evilEdd, 480, 158);
         
         
-        HealthBar healthBar = new HealthBar(17);
-        addObject(healthBar, 130, 30); 
+        HealthBar healthBar = new HealthBar(12);
+        addObject(healthBar, 130, 525); 
         
-        EnemyHealthBar enemyHealthBar = new EnemyHealthBar(25);
-        addObject(enemyHealthBar, 830, 30); 
+        EnemyHealthBar enemyHealthBar = new EnemyHealthBar(57);
+        addObject(enemyHealthBar, 500, 30); 
         
         evilEdd.setHealthBar(enemyHealthBar);
         martin.setHealthBar(healthBar);

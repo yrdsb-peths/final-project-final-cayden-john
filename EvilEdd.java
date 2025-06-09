@@ -6,16 +6,16 @@ public class EvilEdd extends Actor {
     SimpleTimer shootTimer = new SimpleTimer();
 
     int idleIndex = 0;
-    int nextShotDelay = Greenfoot.getRandomNumber(2000) + 500;
+    int nextShotDelay;
 
-    private int maxHealth = 25;
+    private int maxHealth = 57;
     private int currentHealth = maxHealth;
     private EnemyHealthBar healthBar;
 
     public EvilEdd() {
         for (int i = 0; i < idle.length; i++) {
             idle[i] = new GreenfootImage("images/Evil Edd/Evil Edd " + i + ".png");
-            idle[i].scale(355, 355);
+            idle[i].scale(255, 255);
         }
         shootTimer.mark();
     }
@@ -36,7 +36,7 @@ public class EvilEdd extends Actor {
     private void maybeShoot() {
         if (shootTimer.millisElapsed() > nextShotDelay) {
             shootTimer.mark();
-            nextShotDelay = Greenfoot.getRandomNumber(2000) + 500;
+            nextShotDelay = Greenfoot.getRandomNumber(10) + 500;
 
             int dx = Greenfoot.getRandomNumber(11) - 5;
             int dy = Greenfoot.getRandomNumber(5) + 1;

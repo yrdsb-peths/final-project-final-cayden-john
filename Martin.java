@@ -29,7 +29,7 @@ public class Martin extends Actor {
     private boolean isAttacking = false;
     private int attackIndex;
 
-    private int health = 17;
+    private int health = 12;
     private HealthBar healthBar;
 
     private boolean isHurt = false;
