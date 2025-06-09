@@ -2,6 +2,7 @@ import greenfoot.*;
 
 public class EvilEdd extends Actor {
     GreenfootImage[] idle = new GreenfootImage[4];
+    
     SimpleTimer animationTimer = new SimpleTimer();
     SimpleTimer shootTimer = new SimpleTimer();
 
@@ -36,7 +37,7 @@ public class EvilEdd extends Actor {
     private void maybeShoot() {
         if (shootTimer.millisElapsed() > nextShotDelay) {
             shootTimer.mark();
-            nextShotDelay = Greenfoot.getRandomNumber(2000) + 500;
+            nextShotDelay = Greenfoot.getRandomNumber(100) + 500;
 
             int dx = Greenfoot.getRandomNumber(11) - 5;
             int dy = Greenfoot.getRandomNumber(5) + 1;
@@ -50,11 +51,10 @@ public class EvilEdd extends Actor {
         for (Object obj : getIntersectingObjects(Arrow.class)) {
             Arrow arrow = (Arrow) obj;
             int hitboxRadius = 80;
-            if (Math.abs(arrow.getX() - getX()) < hitboxRadius &&
-                Math.abs(arrow.getY() - getY()) < hitboxRadius) {
+            if (Math.abs(arrow.getX() - getX()) < hitboxRadius && Math.abs(arrow.getY() - getY()) < hitboxRadius) {
 
                 getWorld().removeObject(arrow);
-                takeDamage(1);
+                takeDamage(25);
                 break;
             }
         }
@@ -62,6 +62,7 @@ public class EvilEdd extends Actor {
 
     private void takeDamage(int amount) {
         currentHealth = Math.max(0, currentHealth - amount);
+        
         if (healthBar != null) {
             healthBar.updateHealth(currentHealth);
         }
@@ -70,6 +71,9 @@ public class EvilEdd extends Actor {
             if (healthBar != null) {
                 getWorld().removeObject(healthBar);
             }
+            LoserDrill loserDrill = new LoserDrill();
+            getWorld().addObject(loserDrill,800, 150);
+            
             getWorld().removeObject(this);
         }
     }

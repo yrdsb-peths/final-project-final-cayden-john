@@ -92,7 +92,7 @@ public class Martin extends Actor {
 
         for (int i = 0; i < deathLeft.length; i++) {
             deathLeft[i] = new GreenfootImage("images/Hero Death/death" + i + ".png");
-            deathLeft[i].mirrorHorizontally(); // ✅ fixed: correct mirroring
+            deathLeft[i].mirrorHorizontally(); 
             deathLeft[i].scale(400, 400);
         }
 
@@ -135,6 +135,19 @@ public class Martin extends Actor {
             int dy = getY() - evilEdd.getY();
             int distance = (int)Math.sqrt(dx * dx + dy * dy);
             if (distance < 125) {
+                isHurt = true;
+                hurtIndex = 0;
+                damageCooldown.mark();
+                takeDamage();
+            }
+        }
+        
+        LoserDrill loserDrill = (LoserDrill)getOneIntersectingObject(LoserDrill.class);
+        if (loserDrill != null && !isHurt && damageCooldown.millisElapsed() > 1000) {
+            int dx = getX() - loserDrill.getX();
+            int dy = getY() - loserDrill.getY();
+            int distance = (int)Math.sqrt(dx * dx + dy * dy);
+            if (distance < 90) { 
                 isHurt = true;
                 hurtIndex = 0;
                 damageCooldown.mark();
@@ -316,7 +329,9 @@ public class Martin extends Actor {
     }
 
     public void animateDeath() {
-        if (animationTimer.millisElapsed() < 150) return;
+        if (animationTimer.millisElapsed() < 150) {
+            return;
+        }
 
         if (facing.equals("right")) {
             if (deathIndex < deathRight.length) {
