@@ -57,7 +57,7 @@ public class EvilEdd extends Actor {
             if (Math.abs(arrow.getX() - getX()) < hitboxRadius && Math.abs(arrow.getY() - getY()) < hitboxRadius) {
 
                 getWorld().removeObject(arrow);
-                takeDamage(25);
+                takeDamage(1);
                 break;
             }
         }
