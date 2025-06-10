@@ -13,10 +13,6 @@ public class MyWorld extends World {
         addObject(martin,100,482);
 
         setBackground("images/Battleground2.png");
-        //LoserDrill loserDrill = new LoserDrill();
-        //addObject(loserDrill,300, 200);
-        //WiseFarmer wiseFarmer = new WiseFarmer();
-        //addObject(wiseFarmer, 700, 464);
         EvilEdd evilEdd = new EvilEdd();
         addObject(evilEdd, 480, 158);
         
@@ -24,10 +20,12 @@ public class MyWorld extends World {
         HealthBar healthBar = new HealthBar(12);
         addObject(healthBar, 130, 525); 
         
+
         EnemyHealthBar enemyHealthBar = new EnemyHealthBar(57);
         addObject(enemyHealthBar, 500, 30); 
+
         
-        evilEdd.setHealthBar(enemyHealthBar);
+        evilEdd.setHealthBar(eddHealthBar);
         martin.setHealthBar(healthBar);
     }
     

@@ -2,6 +2,7 @@ import greenfoot.*;
 
 public class EvilEdd extends Actor {
     GreenfootImage[] idle = new GreenfootImage[4];
+    
     SimpleTimer animationTimer = new SimpleTimer();
     SimpleTimer shootTimer = new SimpleTimer();
 
@@ -27,21 +28,26 @@ public class EvilEdd extends Actor {
     }
 
     private void animateIdle() {
-        if (animationTimer.millisElapsed() < 125) return;
+        if (animationTimer.millisElapsed() < 125) {
+            return;
+        }
+        
         animationTimer.mark();
         setImage(idle[idleIndex]);
         idleIndex = (idleIndex + 1) % idle.length;
     }
 
-    private void maybeShoot() {
+        private void maybeShoot() {
         if (shootTimer.millisElapsed() > nextShotDelay) {
             shootTimer.mark();
-            nextShotDelay = Greenfoot.getRandomNumber(10) + 500;
 
-            int dx = Greenfoot.getRandomNumber(11) - 5;
-            int dy = Greenfoot.getRandomNumber(5) + 1;
+            nextShotDelay = Greenfoot.getRandomNumber(100) + 500;
 
-            EnemyShot shot = new EnemyShot(dx, dy);
+
+            int xSpeed = Greenfoot.getRandomNumber(11) - 5;
+            int ySpeed = Greenfoot.getRandomNumber(7) + 1;
+
+            EnemyShot shot = new EnemyShot(xSpeed, ySpeed);
             getWorld().addObject(shot, getX(), getY());
         }
     }
@@ -50,8 +56,7 @@ public class EvilEdd extends Actor {
         for (Object obj : getIntersectingObjects(Arrow.class)) {
             Arrow arrow = (Arrow) obj;
             int hitboxRadius = 80;
-            if (Math.abs(arrow.getX() - getX()) < hitboxRadius &&
-                Math.abs(arrow.getY() - getY()) < hitboxRadius) {
+            if (Math.abs(arrow.getX() - getX()) < hitboxRadius && Math.abs(arrow.getY() - getY()) < hitboxRadius) {
 
                 getWorld().removeObject(arrow);
                 takeDamage(1);
@@ -62,6 +67,7 @@ public class EvilEdd extends Actor {
 
     private void takeDamage(int amount) {
         currentHealth = Math.max(0, currentHealth - amount);
+        
         if (healthBar != null) {
             healthBar.updateHealth(currentHealth);
         }
@@ -70,6 +76,12 @@ public class EvilEdd extends Actor {
             if (healthBar != null) {
                 getWorld().removeObject(healthBar);
             }
+            LoserDrill loserDrill = new LoserDrill();
+            getWorld().addObject(loserDrill,800, 150);
+            EnemyHealthBar drillHealthBar = new EnemyHealthBar(25);
+            getWorld().addObject(drillHealthBar, 830, 30); 
+            loserDrill.setHealthBar(drillHealthBar);
+            
             getWorld().removeObject(this);
         }
     }
