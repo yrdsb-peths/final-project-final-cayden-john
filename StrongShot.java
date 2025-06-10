@@ -1,24 +1,26 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-public class EnemyShot extends Actor {
+public class StrongShot extends Actor {
+    
+    private final int ANIMATION_SPEED = 150; // Millis for animation
     private int xSpeed;
     private int ySpeed;
 
-    private GreenfootImage[] fireballFrames = new GreenfootImage[4];
+    private GreenfootImage[] StrongShot = new GreenfootImage[4];
     
     private int index = 0;
     private SimpleTimer animationTimer = new SimpleTimer();
 
-    public EnemyShot(int xSpeed, int ySpeed) {
+    public StrongShot(int xSpeed, int ySpeed) {
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
- 
-        for (int i = 0; i < fireballFrames.length; i++) {
-            fireballFrames[i] = new GreenfootImage("images/FireBall/Fireball " + i + ".png");
-            fireballFrames[i].scale(100, 100);
+
+        for (int i = 0; i < StrongShot.length; i++) {
+            StrongShot[i] = new GreenfootImage("images/StrongShot/StrongShot" + i + ".png");
+            StrongShot[i].scale(100, 100);
         }
 
-        setImage(fireballFrames[0]);
+        setImage(StrongShot[0]);
         animationTimer.mark();
     }
 
@@ -32,9 +34,9 @@ public class EnemyShot extends Actor {
     }
     
     public void animate() {
-        if (animationTimer.millisElapsed() >= 250) {
-            index = (index + 1) % fireballFrames.length;
-            setImage(fireballFrames[index]);
+        if (animationTimer.millisElapsed() >= ANIMATION_SPEED) {
+            index = (index + 1) % StrongShot.length;
+            setImage(StrongShot[index]);
             animationTimer.mark();
         }
     }
