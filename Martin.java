@@ -39,7 +39,10 @@ public class Martin extends Actor {
 
     int deathIndex = 0;
     boolean isDead = false;
-
+    
+    SimpleTimer deathDelayTimer = new SimpleTimer();
+    boolean deathDelayStarted = false;
+    
     public Martin() {
         for(int i = 0; i < idleRight.length; i++) {
             idleRight[i] = new GreenfootImage("images/Idle Hero/idle" + i + ".png");
@@ -345,7 +348,7 @@ public class Martin extends Actor {
         if (animationTimer.millisElapsed() < 150) {
             return;
         }
-
+    
         if (facing.equals("right")) {
             if (deathIndex < deathRight.length) {
                 setImage(deathRight[deathIndex]);
@@ -359,9 +362,17 @@ public class Martin extends Actor {
                 animationTimer.mark();
             }
         }
-
+    
         if (deathIndex >= deathRight.length) {
-            Greenfoot.stop();
+            if (!deathDelayStarted) {
+                deathDelayTimer.mark();
+                deathDelayStarted = true;
+            }
+    
+            if (deathDelayTimer.millisElapsed() > 2000) {
+                Greenfoot.setWorld(new GameOver());
+            }
         }
     }
+
 }
