@@ -126,7 +126,7 @@ public class LoserDrill extends Actor
             }
             WiseFarmer wiseFarmer = new WiseFarmer();
             getWorld().addObject(wiseFarmer, 850, 464);
-            EnemyHealthBar farmerHealthBar = new EnemyHealthBar(25);
+            EnemyHealthBar farmerHealthBar = new EnemyHealthBar(75);
             getWorld().addObject(farmerHealthBar, 500, 30); 
             wiseFarmer.setHealthBar(farmerHealthBar);
             
