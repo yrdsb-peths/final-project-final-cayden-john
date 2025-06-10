@@ -18,22 +18,22 @@ public class LoserDrill extends Actor
     
     public void act()
     {
-        if(getX() > 100 && getY() == 150){
+        if(getX() > 95 && getY() == 150){
             dashLeft();
             direction = "left";
         } 
         
-        if(getX() < 100 && getY() < 420) {
+        if(getX() < 95 && getY() < 420) {
             dashDown();
             direction = "down";
         }
         
-        if(getY() > 420) {
+        if(getY() > 415) {
             dashRight();
             direction = "right";
         }
         
-        if(getX() > 880) {
+        if(getX() > 875) {
             dashUp();
             direction = "up";
         }
@@ -85,19 +85,19 @@ public class LoserDrill extends Actor
     }
     
     public void dashLeft() {
-        move(-8);
+        move(-10);
     }
     
     public void dashDown() {
-        setLocation(getX(), getY() + 8);
+        setLocation(getX(), getY() + 10);
     }
     
     public void dashRight() {
-        move(8);
+        move(10);
     }
     
     public void dashUp() {
-        setLocation(getX(), getY() - 8);
+        setLocation(getX(), getY() - 10);
     }
     
         private void checkArrowHit() {
