@@ -130,6 +130,7 @@ public class Martin extends Actor {
                     takeDamage();
                 }
             }
+
         }
 
         EvilEdd evilEdd = (EvilEdd)getOneIntersectingObject(EvilEdd.class);

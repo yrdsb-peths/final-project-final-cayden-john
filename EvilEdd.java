@@ -4,7 +4,9 @@ public class EvilEdd extends Actor {
     GreenfootImage[] idle = new GreenfootImage[4];
     
     SimpleTimer animationTimer = new SimpleTimer();
-    SimpleTimer shootTimer = new SimpleTimer();
+    SimpleTimer shootTimer1 = new SimpleTimer();
+    SimpleTimer shootTimer2 = new SimpleTimer();
+
 
     int idleIndex = 0;
     int nextShotDelay;
@@ -18,12 +20,14 @@ public class EvilEdd extends Actor {
             idle[i] = new GreenfootImage("images/Evil Edd/Evil Edd " + i + ".png");
             idle[i].scale(255, 255);
         }
-        shootTimer.mark();
+        shootTimer1.mark();
+        shootTimer2.mark();
     }
 
     public void act() {
         animateIdle();
         maybeShoot();
+        maybeShoot1();
         checkArrowHit();
     }
 
@@ -37,18 +41,23 @@ public class EvilEdd extends Actor {
         idleIndex = (idleIndex + 1) % idle.length;
     }
 
-        private void maybeShoot() {
-        if (shootTimer.millisElapsed() > nextShotDelay) {
-            shootTimer.mark();
-
-            nextShotDelay = Greenfoot.getRandomNumber(100) + 500;
-
-
+    private void maybeShoot() {
+        if (shootTimer1.millisElapsed() > Greenfoot.getRandomNumber(100) + 500) {
+            shootTimer1.mark();
             int xSpeed = Greenfoot.getRandomNumber(11) - 5;
             int ySpeed = Greenfoot.getRandomNumber(7) + 1;
-
             EnemyShot shot = new EnemyShot(xSpeed, ySpeed);
             getWorld().addObject(shot, getX(), getY());
+        }
+    }
+    
+    private void maybeShoot1() {
+        if (shootTimer2.millisElapsed() > Greenfoot.getRandomNumber(100000) + 650) {
+            shootTimer2.mark();
+            int xSpeed = Greenfoot.getRandomNumber(11) - 5;
+            int ySpeed = Greenfoot.getRandomNumber(7) + 1;
+            StrongShot strongShot = new StrongShot(xSpeed, ySpeed);
+            getWorld().addObject(strongShot, getX(), getY());
         }
     }
 
@@ -78,8 +87,8 @@ public class EvilEdd extends Actor {
             }
             LoserDrill loserDrill = new LoserDrill();
             getWorld().addObject(loserDrill,800, 150);
-            EnemyHealthBar drillHealthBar = new EnemyHealthBar(25);
-            getWorld().addObject(drillHealthBar, 830, 30); 
+            EnemyHealthBar drillHealthBar = new EnemyHealthBar(52);
+            getWorld().addObject(drillHealthBar, 500, 30); 
             loserDrill.setHealthBar(drillHealthBar);
             
             getWorld().removeObject(this);
