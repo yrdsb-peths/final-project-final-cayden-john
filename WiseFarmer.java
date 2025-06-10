@@ -17,7 +17,7 @@ public class WiseFarmer extends Actor
     int idleIndex = 0;
     int nextShotDelay = Greenfoot.getRandomNumber(2000) + 500;
     
-    private int maxHealth = 25;
+    private int maxHealth = 75;
     private int currentHealth = maxHealth;
     private EnemyHealthBar healthBar;
     int dashReset = 0;
