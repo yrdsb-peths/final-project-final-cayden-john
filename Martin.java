@@ -127,7 +127,7 @@ public class Martin extends Actor {
                     isHurt = true;
                     hurtIndex = 0;
                     damageCooldown.mark();
-                    takeDamage();
+                    takeDamage(1);
                 }
             }
 
@@ -142,8 +142,25 @@ public class Martin extends Actor {
                 isHurt = true;
                 hurtIndex = 0;
                 damageCooldown.mark();
-                takeDamage();
+                takeDamage(1);
             }
+        }
+        
+        if (!isHurt && damageCooldown.millisElapsed() > 1000) {
+            StrongShot strongShot = (StrongShot)getOneIntersectingObject(StrongShot.class);
+            if (strongShot != null) {
+                int dx = getX() - strongShot.getX();
+                int dy = getY() - strongShot.getY();
+                int distance = (int)Math.sqrt(dx * dx + dy * dy);
+                if (distance < 60) {
+                    getWorld().removeObject(strongShot);
+                    isHurt = true;
+                    hurtIndex = 0;
+                    damageCooldown.mark();
+                    takeDamage(3);
+                }
+            }
+
         }
         
         LoserDrill loserDrill = (LoserDrill)getOneIntersectingObject(LoserDrill.class);
@@ -155,7 +172,7 @@ public class Martin extends Actor {
                 isHurt = true;
                 hurtIndex = 0;
                 damageCooldown.mark();
-                takeDamage();
+                takeDamage(1);
             }
         }
         
@@ -168,7 +185,7 @@ public class Martin extends Actor {
                 isHurt = true;
                 hurtIndex = 0;
                 damageCooldown.mark();
-                takeDamage();
+                takeDamage(1);
             }
         }
 
@@ -313,8 +330,8 @@ public class Martin extends Actor {
         this.healthBar = healthBar;
     }
 
-    public void takeDamage() {
-        health--;
+    public void takeDamage(int x) {
+        health -= x;
         if (healthBar != null) {
             healthBar.updateHealth(health);
         }
