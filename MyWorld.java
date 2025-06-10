@@ -21,8 +21,8 @@ public class MyWorld extends World {
         addObject(healthBar, 130, 525); 
         
 
-        EnemyHealthBar enemyHealthBar = new EnemyHealthBar(57);
-        addObject(enemyHealthBar, 500, 30); 
+        EnemyHealthBar eddHealthBar = new EnemyHealthBar(57);
+        addObject(eddHealthBar, 500, 30); 
 
         
         evilEdd.setHealthBar(eddHealthBar);
