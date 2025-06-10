@@ -28,21 +28,24 @@ public class EvilEdd extends Actor {
     }
 
     private void animateIdle() {
-        if (animationTimer.millisElapsed() < 125) return;
+        if (animationTimer.millisElapsed() < 125) {
+            return;
+        }
+        
         animationTimer.mark();
         setImage(idle[idleIndex]);
         idleIndex = (idleIndex + 1) % idle.length;
     }
 
-    private void maybeShoot() {
+        private void maybeShoot() {
         if (shootTimer.millisElapsed() > nextShotDelay) {
             shootTimer.mark();
             nextShotDelay = Greenfoot.getRandomNumber(100) + 500;
 
-            int dx = Greenfoot.getRandomNumber(11) - 5;
-            int dy = Greenfoot.getRandomNumber(5) + 1;
+            int xSpeed = Greenfoot.getRandomNumber(11) - 5;
+            int ySpeed = Greenfoot.getRandomNumber(7) + 1;
 
-            EnemyShot shot = new EnemyShot(dx, dy);
+            EnemyShot shot = new EnemyShot(xSpeed, ySpeed);
             getWorld().addObject(shot, getX(), getY());
         }
     }
@@ -54,7 +57,7 @@ public class EvilEdd extends Actor {
             if (Math.abs(arrow.getX() - getX()) < hitboxRadius && Math.abs(arrow.getY() - getY()) < hitboxRadius) {
 
                 getWorld().removeObject(arrow);
-                takeDamage(1);
+                takeDamage(25);
                 break;
             }
         }

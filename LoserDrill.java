@@ -107,7 +107,7 @@ public class LoserDrill extends Actor
             if (Math.abs(arrow.getX() - getX()) < hitboxRadius && Math.abs(arrow.getY() - getY()) < hitboxRadius) {
 
                 getWorld().removeObject(arrow);
-                takeDamage(1);
+                takeDamage(25);
                 break;
             }
         }

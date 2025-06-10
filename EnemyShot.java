@@ -1,57 +1,41 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-public class EnemyShot extends Actor
-{
-    private double dx;
-    private double dy;
-    private final double SPEED = 6.5;
+public class EnemyShot extends Actor {
+    private int xSpeed;
+    private int ySpeed;
 
     private GreenfootImage[] fireballFrames = new GreenfootImage[4];
-    private int frameIndex = 0;
+    
+    private int index = 0;
     private SimpleTimer animationTimer = new SimpleTimer();
 
-    public EnemyShot(int dxInput, int dyInput) {
-        double length = Math.sqrt(dxInput * dxInput + dyInput * dyInput);
-        if (length == 0) {
-            dx = 0;
-            dy = SPEED; 
-        } else {
-            dx = (dxInput / length) * SPEED;
-            dy = (dyInput / length) * SPEED;
-        }
+    public EnemyShot(int xSpeed, int ySpeed) {
+        this.xSpeed = xSpeed;
+        this.ySpeed = ySpeed;
 
- 
         for (int i = 0; i < fireballFrames.length; i++) {
             fireballFrames[i] = new GreenfootImage("images/FireBall/Fireball " + i + ".png");
-            fireballFrames[i].scale(100, 100); 
+            fireballFrames[i].scale(100, 100);
         }
 
         setImage(fireballFrames[0]);
         animationTimer.mark();
     }
 
-    public void act()
-    {
-        moveShot();
+    public void act() {
         animate();
+        setLocation(getX() + xSpeed, getY() + ySpeed);
 
         if (getX() > getWorld().getWidth() - 20 || getX() < 5 || getY() > getWorld().getHeight() - 50 || getY() < 5) {
             getWorld().removeObject(this);
-            return;
         }
     }
-
-    private void moveShot() {
-        setLocation((int)(getX() + dx), (int)(getY() + dy));
-    }
-
-    private void animate() {
-        if (animationTimer.millisElapsed() < 250) {
-            return;
+    
+    public void animate() {
+        if (animationTimer.millisElapsed() >= 250) {
+            index = (index + 1) % fireballFrames.length;
+            setImage(fireballFrames[index]);
+            animationTimer.mark();
         }
-
-        frameIndex = (frameIndex + 1) % fireballFrames.length;
-        setImage(fireballFrames[frameIndex]);
-        animationTimer.mark();
     }
 }
