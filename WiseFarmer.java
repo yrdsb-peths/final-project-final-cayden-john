@@ -97,6 +97,9 @@ public class WiseFarmer extends Actor
             if (healthBar != null) {
                 getWorld().removeObject(healthBar);
             }
+            EndScreen win = new EndScreen();
+            Greenfoot.setWorld(win);
+            
             getWorld().removeObject(this);
         }
     }
