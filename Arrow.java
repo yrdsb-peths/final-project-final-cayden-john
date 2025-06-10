@@ -14,7 +14,7 @@ public class Arrow extends Actor
             setLocation(getX() - speed, getY());
         }
         
-        if(getX() > getWorld().getWidth() - 50 || getX() < 5) {
+        if(getX() > getWorld().getWidth() - 5 || getX() < 5) {
             getWorld().removeObject(this);
         }
     }

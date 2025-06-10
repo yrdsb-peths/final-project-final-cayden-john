@@ -12,6 +12,10 @@ public class LoserDrill extends Actor
     String direction = "left";
     int idleIndex = 0;
     
+    private int maxHealth = 25;
+    private int currentHealth = maxHealth;
+    private EnemyHealthBar healthBar;
+    
     public void act()
     {
         if(getX() > 100 && getY() == 150){
@@ -35,6 +39,7 @@ public class LoserDrill extends Actor
         }
         
         animate();
+        checkArrowHit();
     }
     
     public LoserDrill(){
@@ -93,5 +98,43 @@ public class LoserDrill extends Actor
     
     public void dashUp() {
         setLocation(getX(), getY() - 8);
+    }
+    
+        private void checkArrowHit() {
+        for (Object obj : getIntersectingObjects(Arrow.class)) {
+            Arrow arrow = (Arrow) obj;
+            int hitboxRadius = 80;
+            if (Math.abs(arrow.getX() - getX()) < hitboxRadius && Math.abs(arrow.getY() - getY()) < hitboxRadius) {
+
+                getWorld().removeObject(arrow);
+                takeDamage(1);
+                break;
+            }
+        }
+    }
+
+    private void takeDamage(int amount) {
+        currentHealth = Math.max(0, currentHealth - amount);
+        
+        if (healthBar != null) {
+            healthBar.updateHealth(currentHealth);
+        }
+
+        if (currentHealth <= 0) {
+            if (healthBar != null) {
+                getWorld().removeObject(healthBar);
+            }
+            WiseFarmer wiseFarmer = new WiseFarmer();
+            getWorld().addObject(wiseFarmer, 850, 464);
+            EnemyHealthBar farmerHealthBar = new EnemyHealthBar(25);
+            getWorld().addObject(farmerHealthBar, 830, 30); 
+            wiseFarmer.setHealthBar(farmerHealthBar);
+            
+            getWorld().removeObject(this);
+        }
+    }
+    
+        public void setHealthBar(EnemyHealthBar healthBar) {
+        this.healthBar = healthBar;
     }
 }

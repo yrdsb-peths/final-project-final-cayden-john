@@ -54,7 +54,7 @@ public class EvilEdd extends Actor {
             if (Math.abs(arrow.getX() - getX()) < hitboxRadius && Math.abs(arrow.getY() - getY()) < hitboxRadius) {
 
                 getWorld().removeObject(arrow);
-                takeDamage(25);
+                takeDamage(1);
                 break;
             }
         }
@@ -73,6 +73,9 @@ public class EvilEdd extends Actor {
             }
             LoserDrill loserDrill = new LoserDrill();
             getWorld().addObject(loserDrill,800, 150);
+            EnemyHealthBar drillHealthBar = new EnemyHealthBar(25);
+            getWorld().addObject(drillHealthBar, 830, 30); 
+            loserDrill.setHealthBar(drillHealthBar);
             
             getWorld().removeObject(this);
         }

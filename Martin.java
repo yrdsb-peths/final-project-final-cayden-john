@@ -154,6 +154,19 @@ public class Martin extends Actor {
                 takeDamage();
             }
         }
+        
+        WiseFarmer wiseFarmer = (WiseFarmer)getOneIntersectingObject(WiseFarmer.class);
+        if (wiseFarmer != null && !isHurt && damageCooldown.millisElapsed() > 1000) {
+            int dx = getX() - wiseFarmer.getX();
+            int dy = getY() - wiseFarmer.getY();
+            int distance = (int)Math.sqrt(dx * dx + dy * dy);
+            if (distance < 50) { 
+                isHurt = true;
+                hurtIndex = 0;
+                damageCooldown.mark();
+                takeDamage();
+            }
+        }
 
         if (isHurt) {
             animateHurt();

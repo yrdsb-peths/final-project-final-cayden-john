@@ -13,8 +13,6 @@ public class MyWorld extends World {
         addObject(martin,100,482);
 
         setBackground("images/Battleground2.png");
-        //WiseFarmer wiseFarmer = new WiseFarmer();
-        //addObject(wiseFarmer, 700, 464);
         EvilEdd evilEdd = new EvilEdd();
         addObject(evilEdd, 480, 178);
         
