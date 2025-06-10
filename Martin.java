@@ -172,7 +172,7 @@ public class Martin extends Actor {
                 isHurt = true;
                 hurtIndex = 0;
                 damageCooldown.mark();
-                takeDamage(1);
+                takeDamage(2);
             }
         }
         

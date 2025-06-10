@@ -120,15 +120,15 @@ public class WiseFarmer extends Actor
     
     public void dash() {
         if(facing.equals("left") && dashReset >= 1000) {
-            move(-5);
-            if(getX() < 100) {
+            move(-8);
+            if(getX() < 95) {
                 facing = "right";
                 xSpeed = 5;
                 dashReset = 0;
             }
         } else if (facing.equals("right") && dashReset >= 1000) {
-            move(5);
-            if(getX() > 800) {
+            move(8);
+            if(getX() > 795) {
                 facing = "left";
                 xSpeed = -5;
                 dashReset = 0;
