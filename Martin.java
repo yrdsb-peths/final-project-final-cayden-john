@@ -267,20 +267,24 @@ public class Martin extends Actor {
             return;
         }
         animationTimer.mark();
-
+    
         if(facing.equals("right")) {
             setImage(attackRight[attackIndex]);
         } else {
             setImage(attackLeft[attackIndex]);
         }
-
+    
+        if(attackIndex == 0) {
+            Greenfoot.playSound("sounds/Pew Sound Effect.mp3");
+        }
+        
         if(attackIndex == 7) {
             Arrow arrow = new Arrow(facing);
             getWorld().addObject(arrow, getX(), getY());
         }
-
+    
         attackIndex++;
-
+    
         if(attackIndex >= attackRight.length) {
             isAttacking = false;
             attackIndex = 0;
