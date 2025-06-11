@@ -109,6 +109,7 @@ public class Martin extends Actor {
     public void act() {
         gravity();
 
+        //checks death, drops on the floor and animates death
         if (isDead) {
             gravity(); 
             checkGroundCollision();
@@ -116,6 +117,7 @@ public class Martin extends Actor {
             return;
         }
 
+        //checks collision with regular shot and takes damage
         if (!isHurt && damageCooldown.millisElapsed() > 1000) {
             EnemyShot shot = (EnemyShot)getOneIntersectingObject(EnemyShot.class);
             if (shot != null) {
@@ -133,6 +135,7 @@ public class Martin extends Actor {
 
         }
 
+        //checks for collision with EvilEdd and takes damage
         EvilEdd evilEdd = (EvilEdd)getOneIntersectingObject(EvilEdd.class);
         if (evilEdd != null && !isHurt && damageCooldown.millisElapsed() > 1000) {
             int dx = getX() - evilEdd.getX();
@@ -146,6 +149,7 @@ public class Martin extends Actor {
             }
         }
         
+        //checks for collision with the strong shot and takes damage
         if (!isHurt && damageCooldown.millisElapsed() > 1000) {
             StrongShot strongShot = (StrongShot)getOneIntersectingObject(StrongShot.class);
             if (strongShot != null) {
@@ -160,9 +164,9 @@ public class Martin extends Actor {
                     takeDamage(3);
                 }
             }
-
         }
         
+        //checks for collision with LoserDrill and takes damage
         LoserDrill loserDrill = (LoserDrill)getOneIntersectingObject(LoserDrill.class);
         if (loserDrill != null && !isHurt && damageCooldown.millisElapsed() > 1000) {
             int dx = getX() - loserDrill.getX();
@@ -176,6 +180,7 @@ public class Martin extends Actor {
             }
         }
         
+        //checks for collision with WiseFarmer and takes damage
         WiseFarmer wiseFarmer = (WiseFarmer)getOneIntersectingObject(WiseFarmer.class);
         if (wiseFarmer != null && !isHurt && damageCooldown.millisElapsed() > 1000) {
             int dx = getX() - wiseFarmer.getX();
@@ -282,6 +287,7 @@ public class Martin extends Actor {
         }
     }
 
+    //method for gravity so Martin falls back down after jumping
     public void gravity() {
         setLocation(getX(), getY() + jumpHeight);
         jumpHeight += gravity;
@@ -297,6 +303,7 @@ public class Martin extends Actor {
         }
     }
 
+    //checks collision with platforms
     public void checkGroundCollision() {
         if (jumpHeight >= 0) {
             int checkOffset = (getImage().getHeight() / 2) - feetOffset + 5;
@@ -362,6 +369,7 @@ public class Martin extends Actor {
         }
     }
 
+    //animates death and goes to game over screen after delay (so entire animation plays)
     public void animateDeath() {
         if (animationTimer.millisElapsed() < 150) {
             return;
@@ -392,5 +400,4 @@ public class Martin extends Actor {
             }
         }
     }
-
 }

@@ -17,6 +17,7 @@ public class EnemyHealthBar extends Actor {
         updateImage();
     }
 
+    //Change colour and filled in size
     private void updateImage() {
         GreenfootImage img = new GreenfootImage(barWidth, barHeight);
         double percent = (double) currentHealth / maxHealth;

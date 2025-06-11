@@ -2,7 +2,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class StrongShot extends Actor {
     
-    private final int ANIMATION_SPEED = 150; // Millis for animation
+    private final int ANIMATION_SPEED = 150;
     private int xSpeed;
     private int ySpeed;
 

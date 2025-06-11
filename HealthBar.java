@@ -17,6 +17,7 @@ public class HealthBar extends Actor {
         updateImage();
     }
 
+    //Updates colour and fill in size
     private void updateImage() {
         GreenfootImage img = new GreenfootImage(barWidth, barHeight);
         double healthPercent = (double) currentHealth / maxHealth;

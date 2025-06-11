@@ -73,6 +73,7 @@ public class WiseFarmer extends Actor
         idleIndex = (idleIndex + 1) % idleRight.length;
     }
     
+    //checks for arrow collision and takes damage
     private void checkArrowHit() {
         for (Object obj : getIntersectingObjects(Arrow.class)) {
             Arrow arrow = (Arrow) obj;
@@ -104,6 +105,7 @@ public class WiseFarmer extends Actor
         }
     }
     
+    //shoots with a random delay
     private void shoot() {
         if (shootTimer.millisElapsed() > nextShotDelay) {
             shootTimer.mark();
@@ -118,6 +120,7 @@ public class WiseFarmer extends Actor
         this.healthBar = healthBar;
     }
     
+    //method for WiseFarmers dash
     public void dash() {
         if(facing.equals("left") && dashReset >= 1000) {
             move(-8);
