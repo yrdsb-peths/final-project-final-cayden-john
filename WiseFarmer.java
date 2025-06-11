@@ -17,7 +17,7 @@ public class WiseFarmer extends Actor
     int idleIndex = 0;
     int nextShotDelay = Greenfoot.getRandomNumber(2000) + 500;
     
-    private int maxHealth = 75;
+    private int maxHealth = 30;
     private int currentHealth = maxHealth;
     private EnemyHealthBar healthBar;
     int dashReset = 0;
@@ -26,8 +26,6 @@ public class WiseFarmer extends Actor
 
     public void act()
     {
-        checkArrowHit();
-        
         dashReset++;
         dash();
         
@@ -38,6 +36,8 @@ public class WiseFarmer extends Actor
             animateIdleRight();
             shoot();
         }
+        
+        checkArrowHit();
     }
     
     public WiseFarmer(){
@@ -102,6 +102,7 @@ public class WiseFarmer extends Actor
             Greenfoot.setWorld(win);
             
             getWorld().removeObject(this);
+            return;
         }
     }
     
@@ -124,14 +125,14 @@ public class WiseFarmer extends Actor
     public void dash() {
         if(facing.equals("left") && dashReset >= 1000) {
             move(-8);
-            if(getX() < 95) {
+            if(getX() < 50) {
                 facing = "right";
                 xSpeed = 5;
                 dashReset = 0;
             }
         } else if (facing.equals("right") && dashReset >= 1000) {
             move(8);
-            if(getX() > 795) {
+            if(getX() > 900) {
                 facing = "left";
                 xSpeed = -5;
                 dashReset = 0;

@@ -12,7 +12,7 @@ public class LoserDrill extends Actor
     String direction = "left";
     int idleIndex = 0;
     
-    private int maxHealth = 52;
+    private int maxHealth = 25;
     private int currentHealth = maxHealth;
     private EnemyHealthBar healthBar;
     
@@ -114,8 +114,8 @@ public class LoserDrill extends Actor
                 getWorld().removeObject(healthBar);
             }
             WiseFarmer wiseFarmer = new WiseFarmer();
-            getWorld().addObject(wiseFarmer, 850, 464);
-            EnemyHealthBar farmerHealthBar = new EnemyHealthBar(75);
+            getWorld().addObject(wiseFarmer, 900, 464);
+            EnemyHealthBar farmerHealthBar = new EnemyHealthBar(30);
             getWorld().addObject(farmerHealthBar, 500, 30); 
             wiseFarmer.setHealthBar(farmerHealthBar);
             

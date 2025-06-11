@@ -11,7 +11,7 @@ public class EvilEdd extends Actor {
     int idleIndex = 0;
     int nextShotDelay;
 
-    private int maxHealth = 57;
+    private int maxHealth = 25;
     private int currentHealth = maxHealth;
     private EnemyHealthBar healthBar;
 
@@ -90,7 +90,7 @@ public class EvilEdd extends Actor {
             }
             LoserDrill loserDrill = new LoserDrill();
             getWorld().addObject(loserDrill,800, 150);
-            EnemyHealthBar drillHealthBar = new EnemyHealthBar(52);
+            EnemyHealthBar drillHealthBar = new EnemyHealthBar(25);
             getWorld().addObject(drillHealthBar, 500, 30); 
             loserDrill.setHealthBar(drillHealthBar);
             

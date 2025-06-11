@@ -176,7 +176,7 @@ public class Martin extends Actor {
                 isHurt = true;
                 hurtIndex = 0;
                 damageCooldown.mark();
-                takeDamage(2);
+                takeDamage(1);
             }
         }
         
@@ -263,7 +263,7 @@ public class Martin extends Actor {
     }
 
     public void animateAttack() {
-        if(animationTimer.millisElapsed() < 50) {
+        if(animationTimer.millisElapsed() < 25) {
             return;
         }
         animationTimer.mark();

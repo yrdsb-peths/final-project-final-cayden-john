@@ -21,7 +21,7 @@ public class MyWorld extends World {
         addObject(healthBar, 130, 525); 
         
 
-        EnemyHealthBar eddHealthBar = new EnemyHealthBar(57);
+        EnemyHealthBar eddHealthBar = new EnemyHealthBar(25);
         addObject(eddHealthBar, 500, 30); 
 
         
