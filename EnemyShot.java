@@ -25,7 +25,8 @@ public class EnemyShot extends Actor {
     public void act() {
         animate();
         setLocation(getX() + xSpeed, getY() + ySpeed);
-
+        
+        //Removes when outside the world
         if (getX() > getWorld().getWidth() - 20 || getX() < 5 || getY() > getWorld().getHeight() - 50 || getY() < 5) {
             getWorld().removeObject(this);
         }

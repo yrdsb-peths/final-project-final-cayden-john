@@ -41,6 +41,7 @@ public class EvilEdd extends Actor {
         idleIndex = (idleIndex + 1) % idle.length;
     }
 
+    //Possibly shoots regular shot (using randomizer)
     private void maybeShoot() {
         if (shootTimer1.millisElapsed() > Greenfoot.getRandomNumber(100) + 500) {
             shootTimer1.mark();
@@ -51,6 +52,7 @@ public class EvilEdd extends Actor {
         }
     }
     
+    //Possibly shoots super shot (using randomizer)
     private void maybeShoot1() {
         if (shootTimer2.millisElapsed() > Greenfoot.getRandomNumber(100000) + 650) {
             shootTimer2.mark();
@@ -61,6 +63,7 @@ public class EvilEdd extends Actor {
         }
     }
 
+    //checks for arrow collision
     private void checkArrowHit() {
         for (Object obj : getIntersectingObjects(Arrow.class)) {
             Arrow arrow = (Arrow) obj;
